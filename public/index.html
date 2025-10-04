@@ -7,6 +7,13 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta name="description"
         content="ASPO Healthcare provides WHO-GMP medicines across tablets, injectables, syrups. Join our PCD franchise network or request third-party manufacturing quotes.">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11024732061"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'AW-11024732061');
+    </script>
     <style>
         * {
             margin: 0;
@@ -2344,6 +2351,7 @@
                 <div class="hero-form-container">
                     <form class="hero-form" action="https://formsubmit.co/vizztechsolutions@gmail.com" method="POST">
                         <!-- FormSubmit Configuration -->
+                        <input type="hidden" name="_next" value="http://192.168.1.4:5501/public/thank-you.html">
                         <input type="hidden" name="_subject" value="New Enquiry from ASPO Healthcare Website">
                         <input type="hidden" name="_captcha" value="false">
                         <input type="hidden" name="_template" value="table">
@@ -2594,6 +2602,7 @@
                 </div>
                 <form class="franchise-form" action="https://formsubmit.co/vizztechsolutions@gmail.com" method="POST">
                     <!-- FormSubmit Configuration -->
+                    <input type="hidden" name="_next" value="http://192.168.1.4:5501/public/thank-you.html">
                     <input type="hidden" name="_subject" value="New Franchise Application - ASPO Healthcare">
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_template" value="table">
@@ -3016,9 +3025,12 @@
                     </div>
 
                     <div class="social-links">
-                        <a href="mailto:info@aspohealthcare.com" class="social-link"><img width="48" height="48" src="https://img.icons8.com/color/48/gmail-new.png" alt="gmail-new"/></a>
-                        <a href="tel:+919416300000" class="social-link"><img width="48" height="48" src="https://img.icons8.com/color/48/apple-phone.png" alt="apple-phone"/></a>
-                        <a href="https://www.facebook.com/Aspohealth" class="social-link"><img width="48" height="48" src="https://img.icons8.com/fluency/48/facebook.png" alt="facebook"/></a>
+                        <a href="mailto:info@aspohealthcare.com" class="social-link"><img width="48" height="48"
+                                src="https://img.icons8.com/color/48/gmail-new.png" alt="gmail-new" /></a>
+                        <a href="tel:+919416300000" class="social-link"><img width="48" height="48"
+                                src="https://img.icons8.com/color/48/apple-phone.png" alt="apple-phone" /></a>
+                        <a href="https://www.facebook.com/Aspohealth" class="social-link"><img width="48" height="48"
+                                src="https://img.icons8.com/fluency/48/facebook.png" alt="facebook" /></a>
                     </div>
                 </div>
 
@@ -3127,191 +3139,93 @@
         });
 
         // Hero Form Submission
-        document.querySelector('.hero-form').addEventListener('submit', async function (e) {
-            e.preventDefault();
+        document.querySelector('.hero-form').addEventListener('submit', function (e) {
+            /*e.preventDefault();*/
+
             const button = this.querySelector('button[type="submit"]');
-            const originalText = button.textContent;
             button.textContent = 'Sending...';
             button.disabled = true;
 
-            const formData = new FormData(this);
+            // Create a temporary form to submit via FormSubmit
+            const tempForm = document.createElement('form');
+            tempForm.action = 'https://formsubmit.co/vizztechsolutions@gmail.com';
+            tempForm.method = 'POST';
+            tempForm.style.display = 'none';
 
-            try {
-                const response = await fetch(this.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
+            // Copy all form data
+            const formData = new FormData(form);
+            formData.forEach((value, key) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = value;
+                tempForm.appendChild(input);
+            });
 
-                if (response.ok) {
-                    showModal('success', 'Enquiry Submitted!', 'Thank you for your enquiry! Our team will contact you within 24 hours.');
-                    this.reset();
-                } else {
-                    showModal('error', 'Submission Failed', 'There was an error submitting your form. Please try again or call us at +91-9416250082');
-                }
-            } catch (error) {
-                showModal('error', 'Network Error', 'Please check your internet connection or call us directly at +91-9416250082');
-            } finally {
-                button.textContent = originalText;
-                button.disabled = false;
-            }
+            // Add FormSubmit configuration
+            const configs = {
+                '_next': window.location.origin + '/public/thank-you.html',
+                '_subject': 'New Enquiry from ASPO Healthcare Website',
+                '_captcha': 'false',
+                '_template': 'table'
+            };
+
+            Object.keys(configs).forEach(key => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = configs[key];
+                tempForm.appendChild(input);
+            });
+
+            document.body.appendChild(tempForm);
+            tempForm.submit();
         });
 
         // Franchise Form Submission
-        document.querySelector('.franchise-form').addEventListener('submit', async function (e) {
-            e.preventDefault();
+        document.querySelector('.franchise-form').addEventListener('submit', function (e) {
+            /*e.preventDefault();*/
+
             const button = this.querySelector('button[type="submit"]');
-            const originalText = button.textContent;
             button.textContent = 'Submitting Application...';
             button.disabled = true;
 
-            const formData = new FormData(this);
+            // Create a temporary form to submit via FormSubmit
+            const tempForm = document.createElement('form');
+            tempForm.action = 'https://formsubmit.co/vizztechsolutions@gmail.com';
+            tempForm.method = 'POST';
+            tempForm.style.display = 'none';
 
-            try {
-                const response = await fetch(this.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
+            // Copy all form data
+            const formData = new FormData(form);
+            formData.forEach((value, key) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = value;
+                tempForm.appendChild(input);
+            });
 
-                if (response.ok) {
-                    showModal('success', 'Application Received!', 'Thank you for your franchise application! Our team will review it and contact you within 24-48 hours.');
-                    this.reset();
-                } else {
-                    showModal('error', 'Submission Failed', 'There was an error submitting your application. Please try again or call us at +91-9416250082');
-                }
-            } catch (error) {
-                showModal('error', 'Network Error', 'Please check your internet connection or call us directly at +91-9416250082');
-            } finally {
-                button.textContent = originalText;
-                button.disabled = false;
-            }
+            // Add FormSubmit configuration
+            const configs = {
+                '_next': window.location.origin + '/thank-you.html',
+                '_subject': 'New Franchise Application - ASPO Healthcare',
+                '_captcha': 'false',
+                '_template': 'table'
+            };
+
+            Object.keys(configs).forEach(key => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = configs[key];
+                tempForm.appendChild(input);
+            });
+
+            document.body.appendChild(tempForm);
+            tempForm.submit();
         });
-        /* document.querySelector('.hero-form').addEventListener('submit', async function (e) {
-             e.preventDefault();
- 
-             const button = this.querySelector('button[type="submit"]');
-             const originalText = button.textContent;
-             button.textContent = 'Sending...';
-             button.disabled = true;
- 
-             const formData = {
-                 name: document.getElementById('hero-name').value,
-                 email: document.getElementById('hero-email').value,
-                 phone: document.getElementById('hero-phone').value,
-                 city: document.getElementById('hero-city').value
-             };
- 
-             try {
-                 const response = await fetch('/api/hero-enquiry', {
-                     method: 'POST',
-                     headers: {
-                         'Content-Type': 'application/json',
-                     },
-                     body: JSON.stringify(formData)
-                 });
- 
-                 const data = await response.json();
- 
-                 if (data.success) {
-                     alert('✅ ' + data.message);
-                     this.reset();
-                 } else {
-                     alert('❌ ' + data.message);
-                 }
-             } catch (error) {
-                 alert('❌ Network error. Please check your connection or call us directly at +91-9416250082');
-             } finally {
-                 button.textContent = originalText;
-                 button.disabled = false;
-             }
-         });
- 
-         // Franchise Form Submission
-         document.querySelector('.franchise-form').addEventListener('submit', async function (e) {
-             e.preventDefault();
- 
-             const button = this.querySelector('button[type="submit"]');
-             const originalText = button.textContent;
-             button.textContent = 'Submitting Application...';
-             button.disabled = true;
- 
-             const formData = {
-                 name: document.getElementById('name').value,
-                 email: document.getElementById('email').value,
-                 phone: document.getElementById('phone').value,
-                 message: document.getElementById('message').value
-             };
- 
-             try {
-                 const response = await fetch('/api/franchise-application', {
-                     method: 'POST',
-                     headers: {
-                         'Content-Type': 'application/json',
-                     },
-                     body: JSON.stringify(formData)
-                 });
- 
-                 const data = await response.json();
- 
-                 if (data.success) {
-                     alert('✅ ' + data.message);
-                     this.reset();
-                 } else {
-                     alert('❌ ' + data.message);
-                 }
-             } catch (error) {
-                 alert('❌ Network error. Please check your connection or call us directly at +91-9416250082');
-             } finally {
-                 button.textContent = originalText;
-                 button.disabled = false;
-             }
-         });*/
-        /* function animateCounters() {
-             const counters = document.querySelectorAll('.stat-number');
- 
-             counters.forEach(counter => {
-                 const target = parseInt(counter.dataset.count);
-                 const duration = 2000;
-                 const step = target / (duration / 16);
-                 let current = 0;
- 
-                 const timer = setInterval(() => {
-                     current += step;
-                     if (current >= target) {
-                         counter.textContent = target.toLocaleString();
-                         clearInterval(timer);
-                     } else {
-                         counter.textContent = Math.floor(current).toLocaleString();
-                     }
-                 }, 16);
-             });
-         }
- 
-         const trustStripObserver = new IntersectionObserver((entries) => {
-             entries.forEach(entry => {
-                 if (entry.isIntersecting) {
-                     animateCounters();
-                     trustStripObserver.unobserve(entry.target);
-                 }
-             });
-         }, {
-             threshold: 0.5
-         });
- 
-         document.addEventListener('DOMContentLoaded', function () {
-             const trustStrip = document.querySelector('.trust-strip');
-             if (trustStrip) {
-                 trustStripObserver.observe(trustStrip);
-             }
-         });
- 
-         const badges = document.querySelectorAll('.badge');
-         badges.forEach((badge, index) => {
-             badge.style.animationDelay = `${index * 0.1}s`;
-         });*/
-
-
+    
 
         // Enhanced product data with 16 products per category
         const allProducts = [
@@ -3552,35 +3466,7 @@
             return true;
         }
 
-        /*document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-                let isValid = true;
-                const requiredInputs = this.querySelectorAll('input[required], textarea[required]');
-
-                requiredInputs.forEach(input => {
-                    if (!validateInput(input)) {
-                        isValid = false;
-                    }
-                });
-
-                if (isValid) {
-                    const button = this.querySelector('button[type="submit"]');
-                    const originalText = button.textContent;
-                    button.textContent = 'Submitting...';
-                    button.disabled = true;
-
-                    setTimeout(() => {
-                        alert(`Thank you for your ${this.classList.contains('franchise-form') ? 'franchise application' : 'message'}! We will get back to you within 24 hours.`);
-                        this.reset();
-                        button.textContent = originalText;
-                        button.disabled = false;
-                    }, 1500);
-                } else {
-                    alert('Please fill in all required fields correctly.');
-                }
-            });
-        });*/
+      
 
         document.addEventListener('DOMContentLoaded', function () {
             const inputs = document.querySelectorAll('form input, form textarea');
